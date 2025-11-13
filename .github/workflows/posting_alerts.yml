@@ -11,7 +11,7 @@ jobs:
 
     steps:
     # -----------------------------
-    # 1. Checkout Repo
+    # 1. Checkout Repository
     # -----------------------------
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -25,7 +25,7 @@ jobs:
         python-version: "3.11"
 
     # -----------------------------
-    # 3. Install Requirements
+    # 3. Install Dependencies
     # -----------------------------
     - name: Install dependencies
       run: |
@@ -34,23 +34,24 @@ jobs:
         pip install -r requirements.txt
 
     # -----------------------------
-    # 4. Run Script
+    # 4. Run Posting Alerts Script
     # -----------------------------
     - name: Run Posting Alerts Script
       env:
+        LOCAL_MONGO_URI: ${{ secrets.LOCAL_MONGO_URI }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         CHAT_IDS_JSON: ${{ secrets.CHAT_IDS_JSON }}
-        # Add more secrets here if needed later
       run: |
         cd Alerts
         python posting_alerts.py
 
     # -----------------------------
-    # 5. Debug Output (optional)
+    # 5. Debug Info on Failure
     # -----------------------------
-    - name: Show directory and logs
+    - name: Debug Info (on failure)
       if: failure()
       run: |
-        echo "=== Directory ==="
+        echo "=== Directory Tree ==="
         ls -R .
         echo "=== Python Version ==="
         python --version
