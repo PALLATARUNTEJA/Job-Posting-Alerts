@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: "0 * * * *"   # Runs every hour (UTC)
   workflow_dispatch:       # Manual trigger
-                            # Allows manual execution of the workflow
+
 
 jobs:
   run-alerts:
